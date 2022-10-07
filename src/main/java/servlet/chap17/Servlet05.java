@@ -30,13 +30,13 @@ public class Servlet05 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<Book> list = List.of(new Book("국어", 500), new Book("수학", 4000), new Book("영어", 2000));
+		// 일하고
+		List list = List.of(new Book("java", 500), new Book("css", 300), new Book("spring", 700));
+		// 결과 request 에 추가
 		request.setAttribute("bookList", list);
-		
-		String jspPath = "/WEB-INF/view/chap17/view04.jsp";
-		request.getRequestDispatcher(jspPath).forward(request, response);
-	
+		// forward
+		String path = "/WEB-INF/view/chap17/view04.jsp";
+		request.getRequestDispatcher(path).forward(request, response);
 	}
 
 	/**

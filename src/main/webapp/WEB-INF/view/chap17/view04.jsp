@@ -26,9 +26,9 @@
 		<tbody>
 			<c:forEach items="${bookList }" var="book" varStatus="status">
 				<tr>
-					<td><c:forEach var="i" begin="1" end="10">${status.count }</c:forEach></td>
+					<td>${status.count }</td>
 					<td>${book.title }</td>
-					<td>${book.price * book.price * book.price }원</td>
+					<td>${book.price }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

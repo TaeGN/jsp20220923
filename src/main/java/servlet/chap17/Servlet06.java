@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet03
+ * Servlet implementation class Servlet06
  */
-@WebServlet("/Servlet03")
-public class Servlet03 extends HttpServlet {
+// @WebServlet("/Servlet06")
+public class Servlet06 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet03() {
+    public Servlet06() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,14 +26,8 @@ public class Servlet03 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("세번째 서블릿 일함########");
-		
-		// 일한 결과를 객체에 담아서
-		request.setAttribute("result", "일한 결과!!!!!!");
-		
-		// jsp로 forward
-		String jspPath = "/WEB-INF/view/chap17/view02.jsp";
-		request.getRequestDispatcher(jspPath).forward(request, response);
+		System.out.println("여섯번째 서블릿 일함!!!!!!");
+	
 	}
 
 	/**

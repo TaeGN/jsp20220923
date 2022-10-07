@@ -1,23 +1,23 @@
 package servlet.chap17;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet03
+ * Servlet implementation class Servlet07
  */
-@WebServlet("/Servlet03")
-public class Servlet03 extends HttpServlet {
+//@WebServlet("/Servlet07")
+public class Servlet07 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet03() {
+    public Servlet07() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,14 +26,14 @@ public class Servlet03 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("세번째 서블릿 일함########");
+		System.out.println("일곱번째 서블릿 일함@@@@@@@@@");
+		String ip = getInitParameter("ip");
+		String password = getInitParameter("pw");
+		String userName = getInitParameter("userName");
 		
-		// 일한 결과를 객체에 담아서
-		request.setAttribute("result", "일한 결과!!!!!!");
-		
-		// jsp로 forward
-		String jspPath = "/WEB-INF/view/chap17/view02.jsp";
-		request.getRequestDispatcher(jspPath).forward(request, response);
+		System.out.println("ip 파라미터 : " + ip);
+		System.out.println("pw 파라미터 : " + password);
+		System.out.println("userName 파라미터 : " + userName);
 	}
 
 	/**
