@@ -10,10 +10,81 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <!-- ServletContextListener 설정 -->
+  <listener>
+  	<listener-class>listener.chap20.ServletContextListener02</listener-class>
+  </listener>
+  <listener>
+  	<listener-class>listener.chap20.ServletContextListener01</listener-class>
+  </listener>
+  <listener>
+  	<listener-class>listener.chap20.ServletContextListener03</listener-class>
+  </listener>
+  
+  
+  <!-- 초기화 파라미터 설정 : 어플리케이션 실행시 필요한 정보 작성 -->
+  <context-param>
+  	<param-name>init-param1</param-name>
+  	<param-value>init-value1</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>init-param2</param-name>
+  	<param-value>init-value2</param-value>
+  </context-param>
+  
+  <!-- 세션 설정 -->
   <session-config>
   	<session-timeout>60</session-timeout>
-  </session-config> 
+  </session-config>
   
+  <!-- 필터 설정 -->
+  <filter>
+  	<filter-name>filter02</filter-name>
+  	<filter-class>filter.chap19.Filter02</filter-class>
+  </filter>
+  
+  <filter>
+  	<filter-name>filter03</filter-name>
+  	<filter-class>filter.chap19.Filter03</filter-class>
+  </filter>
+  
+  <filter>
+  	<filter-name>filter04</filter-name>
+  	<filter-class>filter.chap19.Filter04</filter-class>
+  </filter>
+  
+  <filter>
+  	<filter-name>filter05</filter-name>
+  	<filter-class>filter.chap19.Filter05</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>filter03</filter-name>
+  	<url-pattern>/Servlet10</url-pattern>
+  	<url-pattern>/Servlet11</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+  	<filter-name>filter02</filter-name>
+  	<url-pattern>/Servlet10</url-pattern>
+  	<url-pattern>/filter/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+  	<filter-name>filter04</filter-name>
+  	<url-pattern>/Servlet10</url-pattern>
+  	<url-pattern>/filter/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+  	<filter-name>filter05</filter-name>
+  	<url-pattern>/Servlet10</url-pattern>
+  	<url-pattern>/Servlet11</url-pattern>
+  	<!-- <url-pattern>/*</url-pattern> -->
+  </filter-mapping>
+  
+  <!-- 서블릿 설정 -->
   <servlet>
   	<servlet-name>servlet06</servlet-name>
   	<servlet-class>servlet.chap17.Servlet06</servlet-class>
@@ -21,31 +92,38 @@
   
   <servlet-mapping>
   	<servlet-name>servlet06</servlet-name>
-  	<url-pattern>/servlet06</url-pattern>
+  	<url-pattern>/servlet6</url-pattern>
   </servlet-mapping>
   
+  
+  <!--  /servlet7 로 요청 왔을 때 servlet.chap17.Servlet07 가 일하도록 설정하기 -->
   <servlet>
-  	<servlet-name>Servlet07</servlet-name>
+  	<servlet-name>servlet7</servlet-name>
   	<servlet-class>servlet.chap17.Servlet07</servlet-class>
+  	<!-- 서블릿 처음 만들어질 때 필요한 내용들 작성 -->
   	<init-param>
   		<param-name>pw</param-name>
-  		<param-value>123qwe</param-value>
+  		<param-value>1q2w3e</param-value>
   	</init-param>
   	<init-param>
   		<param-name>ip</param-name>
-  		<param-value>2.3.4.5</param-value>
+  		<param-value>2.255.1.99</param-value>
   	</init-param>
   	<init-param>
   		<param-name>userName</param-name>
-  		<param-value>자바자바</param-value>
+  		<param-value>ironman</param-value>
   	</init-param>
-  	
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>Servlet07</servlet-name>
-  	<url-pattern>/Servlet07</url-pattern>
+  	<servlet-name>servlet7</servlet-name>
+  	<url-pattern>/servlet7</url-pattern>
   </servlet-mapping>
-  
 </web-app>
+
+
+
+
+
+
 

@@ -16,7 +16,7 @@ import jsp20220923.chap07.Book;
 /**
  * Servlet implementation class Servlet10
  */
-@WebServlet("/Servlet10")
+@WebServlet(value =  {"/Servlet10", "/filter/servlet10"})
 public class Servlet10 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
