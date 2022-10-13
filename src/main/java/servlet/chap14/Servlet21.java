@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,19 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import domain.chap14.Employee;
+import domain.chap14.Customer;
+import domain.chap14.Product;
 
 /**
- * Servlet implementation class Servlet17
+ * Servlet implementation class Servlet21
  */
-@WebServlet("/Servlet17")
-public class Servlet17 extends HttpServlet {
+@WebServlet("/Servlet21")
+public class Servlet21 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet17() {
+    public Servlet21() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,44 +35,50 @@ public class Servlet17 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1. 파라미터 수집
-		// 2. 파라미터 가공
-		// 3. business logic
-		String sql = "SELECT FirstName, LastName\r\n"
-				+ "FROM Employees;";
+		// 1. request param 수집
+		String id = request.getParameter("id");
+		
+		// 2. request param 가공
+		if (id == null || id.equals("")) {
+			id = "1";
+		}
+		
+		// 3. business logic 실행
+		String sql = "SELECT ProductName, Price "
+				+ "FROM Products "
+				+ "WHERE ProductID = " + id;
 		
 		ServletContext application = request.getServletContext();
+
 		String url = application.getAttribute("jdbc.url").toString();
 		String user = application.getAttribute("jdbc.username").toString();
-		String password = application.getAttribute("jdbc.password").toString();
-		
+		String pw = application.getAttribute("jdbc.password").toString();
+
 		try (
-				// connection 얻기
-				Connection con = DriverManager.getConnection(url, user, password);
-				// statement 생성
+				Connection con = DriverManager.getConnection(url, user, pw);
 				Statement stmt = con.createStatement();
-				// 쿼리 실행
-				ResultSet rs = stmt.executeQuery(sql);
-				) {
-
-				// 4. add attribute 추가 
-				List<Employee> list = new ArrayList<>();
-				while(rs.next()) {
-					Employee e = new Employee();
-					e.setFirstName(rs.getString(1));
-					e.setLastName(rs.getString(2));
-					list.add(e);
-				}
-				request.setAttribute("employeeList", list);
-
+				ResultSet rs = stmt.executeQuery(sql);) {
+			// 4. 결과를 attribute 추가
+			if (rs.next()) {
+				Product p = new Product();
 				
+				String name = rs.getString("ProductName");
+				double price = rs.getDouble("Price");
+				
+				p.setId(Integer.parseInt(id));
+				p.setName(name);
+				p.setPrice(price);
+				
+				request.setAttribute("products", p);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		// 5. /WEB-INF/view/chap14/view05.jsp 로 forward
-		String path = "/WEB-INF/view/chap14/view05.jsp";
-		request.getRequestDispatcher(path).forward(request, response);
+		// 5. forward / redirect
+		String view = "/WEB-INF/view/chap14/view09.jsp";
+		request.getRequestDispatcher(view).forward(request, response);
 	}
 
 	/**

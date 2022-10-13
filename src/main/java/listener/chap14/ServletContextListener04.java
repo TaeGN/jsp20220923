@@ -51,7 +51,7 @@ public class ServletContextListener04 implements ServletContextListener {
         	 props.load(is);
         	 
         	 application.setAttribute("jdbc.url", props.getProperty("jdbc.url"));
-        	 application.setAttribute("jdbc.user", props.getProperty("jdbc.user"));
+        	 application.setAttribute("jdbc.username", props.getProperty("jdbc.user"));
         	 application.setAttribute("jdbc.password", props.getProperty("jdbc.password"));
 		} catch (Exception e) {
 			// TODO: handle exception

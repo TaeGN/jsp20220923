@@ -37,7 +37,7 @@ public class Servlet13 extends HttpServlet {
 		
 		ServletContext application = request.getServletContext();
 		String url = application.getAttribute("jdbc.url").toString();
-		String user = application.getAttribute("jdbc.user").toString();
+		String user = application.getAttribute("jdbc.username").toString();
 		String password = application.getAttribute("jdbc.password").toString();
 		
 		try (

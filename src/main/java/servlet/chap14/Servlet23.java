@@ -3,8 +3,8 @@ package servlet.chap14;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +15,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import domain.chap14.Employee;
+import domain.chap14.Customer;
 
 /**
- * Servlet implementation class Servlet17
+ * Servlet implementation class Servlet23
  */
-@WebServlet("/Servlet17")
-public class Servlet17 extends HttpServlet {
+@WebServlet("/Servlet23")
+public class Servlet23 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet17() {
+    public Servlet23() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,43 +36,53 @@ public class Servlet17 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1. 파라미터 수집
-		// 2. 파라미터 가공
-		// 3. business logic
-		String sql = "SELECT FirstName, LastName\r\n"
-				+ "FROM Employees;";
+		// 1. 파라미터 수집 / 가공
+		String keyword = request.getParameter("keyword");
+		
+		if (keyword == null) {
+			keyword = "";
+		}
+		
+		keyword = "%" + keyword + "%";
+		
+		String sql = "SELECT CustomerID, CustomerName, Address, City, Country "
+				+ "FROM Customers "
+				+ "WHERE CustomerName LIKE ?";
 		
 		ServletContext application = request.getServletContext();
+
 		String url = application.getAttribute("jdbc.url").toString();
 		String user = application.getAttribute("jdbc.username").toString();
-		String password = application.getAttribute("jdbc.password").toString();
-		
+		String pw = application.getAttribute("jdbc.password").toString();
+
 		try (
-				// connection 얻기
-				Connection con = DriverManager.getConnection(url, user, password);
-				// statement 생성
-				Statement stmt = con.createStatement();
-				// 쿼리 실행
-				ResultSet rs = stmt.executeQuery(sql);
-				) {
-
-				// 4. add attribute 추가 
-				List<Employee> list = new ArrayList<>();
-				while(rs.next()) {
-					Employee e = new Employee();
-					e.setFirstName(rs.getString(1));
-					e.setLastName(rs.getString(2));
-					list.add(e);
-				}
-				request.setAttribute("employeeList", list);
-
+				Connection con = DriverManager.getConnection(url, user, pw);
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			
+			pstmt.setString(1, keyword);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
 				
+				List<Customer> list = new ArrayList<>();
+				while (rs.next()) {
+					Customer c = new Customer();
+					c.setName(rs.getString("customerName"));
+					c.setAddress(rs.getString("address"));
+					c.setId(rs.getInt("customerId"));
+					c.setCity(rs.getString("city"));
+					c.setCountry(rs.getString("country"));
+					
+					list.add(c);
+				}
+				
+				request.setAttribute("customers", list);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		// 5. /WEB-INF/view/chap14/view05.jsp 로 forward
-		String path = "/WEB-INF/view/chap14/view05.jsp";
+		String path = "/WEB-INF/view/chap14/view07.jsp";
 		request.getRequestDispatcher(path).forward(request, response);
 	}
 
