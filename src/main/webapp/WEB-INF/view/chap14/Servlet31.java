@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,19 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Servlet28
+ * Servlet implementation class Servlet31
  */
-@WebServlet("/Servlet28")
-public class Servlet28 extends HttpServlet {
+@WebServlet("/Servlet31")
+public class Servlet31 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet28() {
+    public Servlet31() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,25 +31,21 @@ public class Servlet28 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String path = "/WEB-INF/view/chap14/view11.jsp";
-		request.getRequestDispatcher(path).forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String CustomerName = request.getParameter("CustomerName");
-		String Address = request.getParameter("Address");
-		String City = request.getParameter("City");
-		String Country = request.getParameter("Country");
-		String ContactName = request.getParameter("ContactName");
+		// req param
+		String idParam = request.getParameter("id");
+		int id = Integer.parseInt(idParam);
 		
-		String sql = "INSERT INTO Customers\r\n"
-				+ "(CustomerName, Address, City, Country, ContactName)\r\n"
-				+ "VALUES\r\n"
-				+ "(?, ?, ?, ?, ?)";
-		
+		// logic
+		String sql = "DELETE FROM Employees WHERE EmployeeID = ? ";
+
 		ServletContext application = request.getServletContext();
 
 		String url = application.getAttribute("jdbc.url").toString();
@@ -62,25 +56,26 @@ public class Servlet28 extends HttpServlet {
 				Connection con = DriverManager.getConnection(url, user, pw);
 				PreparedStatement pstmt = con.prepareStatement(sql);) {
 			
-			pstmt.setString(1, CustomerName);
-			pstmt.setString(2, Address);
-			pstmt.setString(3, City);
-			pstmt.setString(4, Country);
-			pstmt.setString(5, ContactName);
+			pstmt.setInt(1, id);
 			int cnt = pstmt.executeUpdate();
 			
-			if(cnt == 1) {
-				HttpSession session = request.getSession();
-				session.setAttribute("message", "새 고객이 등록되었습니다.");
-				
-				String path = request.getContextPath() + "/Servlet23";
-				response.sendRedirect(path);
+			if (cnt == 1) {
+				request.getSession()
+				.setAttribute("message", id + "번 직원이 삭제되었습니다.");
 			}
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// f / r
+		
+	
 	}
 
 }
+
+
+
+
+
+

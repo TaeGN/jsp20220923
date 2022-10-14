@@ -6,6 +6,7 @@ public class Customer {
 	private String address;
 	private String city;
 	private String country;
+	private String contactName;
 	
 	public String getName() {
 		return name;
@@ -36,6 +37,12 @@ public class Customer {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public String getContactName() {
+		return contactName;
+	}
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
 	}
 	
 }

@@ -10,32 +10,25 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
-	<h1>고객 목록</h1> 
-	회원수 : ${customers.size() }
-	<div>
-		${sessionScope.message }
-		<c:remove var="message" scope="session"/>
-	</div>
-	<form action="">
-		<input type="text" name="keyword" value="${param.keyword }">
-		<input type="submit" value="이름검색">
-	</form>
-	<a href="${pageContext.request.contextPath }/Servlet28">새 고객 정보 작성하러 가기</a>
+<h1>수정된 고객 리스트</h1>
+	<a href="${pageContext.request.contextPath }/Servlet30">고객 정보 수정하러 가기</a>
 	<table class="table">
 		<thead>
 			<tr>
 				<th>ID</th>
 				<th>CustomerName</th>
 				<th>ContactName</th>
-				<th>주소</th>
-				<th>도시</th>
-				<th>나라</th>
+				<th>Address</th>
+				<th>City</th>
+				<th>Country</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${customers }" var="customer">
+			<c:forEach items="${customerList }" var="customer">
 				<tr>
-					<td>${customer.id }</td>
+					<td>
+						${customer.id }
+					</td>
 					<td>
 						<c:url value="/Servlet30" var="updateUrl">
 							<c:param name="id" value="${customer.id }" />
@@ -45,23 +38,22 @@
 							${customer.name }
 						</a>
 					</td>
-					<td>${customer.contactName }</td>
-					<td>${customer.address }</td>
-					<td>${customer.city }</td>
-					<td>${customer.country }</td>
+					<td>
+						${customer.contactName }
+					</td>
+					<td>
+						${customer.address }
+					</td>
+					<td>
+						${customer.city }
+					</td>
+					<td>
+						${customer.country }
+					</td>
 				</tr>
-			
 			</c:forEach>
 		</tbody>
 	</table>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-

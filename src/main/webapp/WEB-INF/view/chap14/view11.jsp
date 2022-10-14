@@ -11,8 +11,9 @@
 </head>
 <body>
 	<h1>고객 목록</h1>
- 	<form action="" method="post">
+ 	<form action="${pageContext.request.contextPath }/Servlet28" method="post">
  		CustomerName : <input type="text" name="CustomerName"> <br>
+ 		ContactName : <input type="text" name="ContactName"> <br>
  		Address : <input type="text" name="Address"> <br>
  		City : <input type="text" name="City"> <br>
  		Country : <input type="text" name="Country"> <br>
